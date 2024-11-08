@@ -55,8 +55,12 @@ public class QueryConstructor {
     client.query(sql);
   }
 
-    internal void safeComposedQuery()
-    {
-        throw new NotImplementedException();
-    }
+  internal void safeComposedQuery()
+  {
+      string sql = "SELECT * FROM safe_course($1);";
+      Console.Write("Please type id of a course: ");
+      string? user_defined = Console.ReadLine();
+      client.query(sql, user_defined, null);
+  }
+
 }
