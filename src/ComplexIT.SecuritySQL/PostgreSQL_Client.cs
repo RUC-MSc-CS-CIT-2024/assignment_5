@@ -17,7 +17,6 @@
 *****************************************************/
 
 using Npgsql;
-using System.Collections.Generic;
 
 public class PostgreSQL_Client {
   public PostgreSQL_Client (string db, string uname, string pword) {
