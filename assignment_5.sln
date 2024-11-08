@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.002.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{269B7181-D503-4E3C-9046-A226D6492437}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ComplexIT.Security", "src\ComplexIT.Security\ComplexIT.Security.csproj", "{985EF624-6451-4711-AD96-61073E0C173D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{985EF624-6451-4711-AD96-61073E0C173D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{985EF624-6451-4711-AD96-61073E0C173D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{985EF624-6451-4711-AD96-61073E0C173D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{985EF624-6451-4711-AD96-61073E0C173D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{985EF624-6451-4711-AD96-61073E0C173D} = {269B7181-D503-4E3C-9046-A226D6492437}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6F02110F-A7A4-4431-B4E3-641D7382C5C9}
+	EndGlobalSection
+EndGlobal
