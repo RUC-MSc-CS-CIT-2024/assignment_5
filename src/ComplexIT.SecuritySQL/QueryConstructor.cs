@@ -3,11 +3,11 @@
 public class QueryConstructor {
 
   public QueryConstructor() {
-    client = new PostgreSQL_Client("university", "nielsj", "pizza");
+    client = new PostgreSQL_Client("university_normal", "idahayjorgensen", "Jørgensen");
     // retain university database
     // but change username and password
   }
- 
+
   public PostgreSQL_Client client;
 
   // method definitions
@@ -19,11 +19,11 @@ public class QueryConstructor {
     // defining the query 
     Console.Write("Please type any SQL query: ");
     string? sql = Console.ReadLine();
-  
+
     // printing query string to console
     Console.Write("Query to be executed: ");
     Console.ForegroundColor = ConsoleColor.Red;
-    Console.WriteLine(sql+ "\n");
+    Console.WriteLine(sql + "\n");
     Console.ForegroundColor = ConsoleColor.Black;
 
     // executing query
@@ -48,9 +48,27 @@ public class QueryConstructor {
     Console.ForegroundColor = ConsoleColor.Red;
     Console.Write(user_defined);
     Console.ForegroundColor = ConsoleColor.Black;
-    Console.WriteLine(staticSQLafter+ "\n");
+    Console.WriteLine(staticSQLafter + "\n");
 
     // executing query
     client.query(sql);
+  }
+
+  // safeComposedQuery()
+  // Get dynamic part from user,
+  // then compose dynamic and static part,
+  // and send query to db
+  virtual public void safeComposedQuery() {
+    // defining the query
+    string sql = "select * from safe_course(@type)";
+    Console.Write("Please type name of a course name: ");
+    string? user_defined = Console.ReadLine();
+
+    // printing query string to console
+    Console.Write("Query to be executed: select * from safe_course(@user_defined)");
+    Console.Write(user_defined);
+
+    // executing query with parameter
+    client.query(sql, "@type", user_defined);
   }
 }
