@@ -107,3 +107,23 @@ Query/3: SELECT * FROM safe_course(@p_id) with p_id = ' AND 1=0 OR dept_name = '
 -----------+-------+-----------+---------
 (0 rows)
 ```
+
+## Question 4
+
+```csharp
+public class AuthenticatorCustom : Authenticator {
+    public override bool passwordIsOK(string password, string username)
+    {
+        if(password.Length <= 8)
+            return false;
+        if(username != "admin" && password.Contains(username))
+            return false;
+
+        return true;
+    }
+}
+```
+
+## Question 5
+
+

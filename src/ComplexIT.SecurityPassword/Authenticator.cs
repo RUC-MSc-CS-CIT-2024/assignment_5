@@ -38,11 +38,11 @@ public class Authenticator {
     string hashedpassword = hs.Item1; 
     string salt = hs.Item2;
 
+    using NpgsqlCommand cmd = new NpgsqlCommand(null, con);
+
     // add (username, salt, password) to table 'password'
-    string sql = sqlInsertUserRecord(username, salt, hashedpassword);
-    Console.WriteLine("SQL to be inserted: " + sql);
-    NpgsqlCommand cmd = new NpgsqlCommand(sql, con);
-    cmd.CommandText = sql;
+    sqlInsertUserRecord(cmd, username, salt, hashedpassword);
+    Console.WriteLine("SQL to be inserted: " + cmd.CommandText);
     try {
       cmd.ExecuteNonQuery(); 
     } catch (Exception e) {
@@ -59,9 +59,9 @@ public class Authenticator {
   }
 
   public bool login(string username, string login_password) {
-    string sql = sqlSelectUserRecord(username);
-    NpgsqlCommand cmd = new NpgsqlCommand(sql, con);
-    NpgsqlDataReader rdr = cmd.ExecuteReader();
+    using NpgsqlCommand cmd = new NpgsqlCommand(null ,con);
+    sqlSelectUserRecord(cmd, username);
+    using NpgsqlDataReader rdr = cmd.ExecuteReader();
     bool userIsRegistered = rdr.HasRows;
     if (! userIsRegistered) {
       rdr.Close();
@@ -92,8 +92,8 @@ public class Authenticator {
 
   // sqlSetUserRecord is used in register()
 
-  virtual public string sqlInsertUserRecord(string username, string salt, string hashedpassword) {
-    return "insert into password values ("
+  virtual public void sqlInsertUserRecord(NpgsqlCommand cmd, string username, string salt, string hashedpassword) {
+    cmd.CommandText = "insert into password values ("
                      + "'" + username + "',"
                      + "'" + salt + "',"
                      + "'" + hashedpassword + "'"
@@ -102,8 +102,8 @@ public class Authenticator {
 
   // sqlGetUserRecord is used in login()
 
-  virtual public string sqlSelectUserRecord(string username) {
-    return "select salt, hashed_password from password "
+  virtual public void sqlSelectUserRecord(NpgsqlCommand cmd, string username) {
+    cmd.CommandText = "select salt, hashed_password from password "
             + "where username = '" + username + "'";
   }
 }
