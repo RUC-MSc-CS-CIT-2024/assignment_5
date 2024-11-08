@@ -32,10 +32,10 @@ public class PostgreSQL_Client {
 
   public void query(string? sql) {
     try {
-      NpgsqlCommand cmd = new NpgsqlCommand(sql, con);
+      using NpgsqlCommand cmd = new NpgsqlCommand(sql, con);
       if (cmd == null) Console.WriteLine("Error: database could not execute SQL query: " + sql);
       else {
-        NpgsqlDataReader rdr = cmd.ExecuteReader(); 
+        using NpgsqlDataReader rdr = cmd.ExecuteReader(); 
         int statements = countStatements(rdr);
         // the number of SQL statements in the query, usually one
         for (int s = 0; s < statements; s++) { 
@@ -48,7 +48,7 @@ public class PostgreSQL_Client {
     } catch (Exception e) {
       Console.WriteLine("Exception caught by SQL-Injection-Frontend");
       string s = e.ToString().Substring(1,23); // printing only first part of exc message
-      Console.WriteLine(s + " ....");
+      Console.WriteLine(e + " ....");
       Console.WriteLine();
     }
   }
@@ -56,11 +56,12 @@ public class PostgreSQL_Client {
   public void query(string? sql, string? name, string? val) {
     Console.WriteLine("Query/3: " + sql + " with " + name + " = " + val); 
     try {
-      NpgsqlCommand cmd = new NpgsqlCommand(sql, con);
+      using NpgsqlCommand cmd = new NpgsqlCommand(sql, con);
       cmd.Parameters.Add(new NpgsqlParameter(name, val));
-      if (cmd == null) Console.WriteLine("Error: database could not execute SQL query: " + sql);
+      if (cmd == null) 
+        Console.WriteLine("Error: database could not execute SQL query: " + sql);
       else {
-        NpgsqlDataReader rdr = cmd.ExecuteReader(); 
+        using NpgsqlDataReader rdr = cmd.ExecuteReader(); 
         int statements = countStatements(rdr);
         // the number of SQL statements in the query, usually one
         for (int s = 0; s < statements; s++) { 
@@ -73,7 +74,7 @@ public class PostgreSQL_Client {
     } catch (Exception e) {
       Console.WriteLine("Exception caught by SQL-Injection-Frontend");
       string s = e.ToString().Substring(1,23); // printing only first part of exc message
-      Console.WriteLine(s + " ....");
+      Console.WriteLine(e + " ....");
       Console.WriteLine();
     } 
   }

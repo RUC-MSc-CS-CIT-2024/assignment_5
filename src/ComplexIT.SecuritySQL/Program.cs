@@ -18,26 +18,32 @@ QueryConstructor qConstructor = new QueryConstructor();
 string? s = "x";
 
 do {
-  Console.Write("Please select character + enter\n"
-          + "'d' (dynamic query)\n"
-          + "'c' (composed query)\n"
-          + "'x' (exit)\n"
-          + ">");
-  s = Console.ReadLine();
+  Console.Write("""
+    Please select character + enter"
+    'd' (dynamic query)
+    'c' (composed query)
+    'sc' (secure composed query)
+    'x' (exit)
+    >
+    """);
+  s = Console.ReadLine()?.Trim();
   Console.WriteLine();
   switch (s) {
-     case "d":
-       qConstructor.dynamicQuery();
-       break;
-     case "c":
-       qConstructor.composedQuery();
-       break;
-     case "x": 
-       Console.WriteLine("exiting ..");
-       break;
-     default:
-       Console.WriteLine("you typed " + "'" + s + "'" + " -- please use a suggested value");
-       break;
-   } // end switch
+    case "d":
+      qConstructor.dynamicQuery();
+      break;
+    case "c":
+      qConstructor.composedQuery();
+      break;
+    case "sc":
+      qConstructor.safeComposedQuery();
+      break;
+    case "x": 
+      Console.WriteLine("exiting ..");
+      break;
+    default:
+      Console.WriteLine("you typed " + "'" + s + "'" + " -- please use a suggested value");
+      break;
+    } // end switch
 } while (s != "x");
 
