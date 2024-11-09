@@ -6,7 +6,7 @@ public class Authenticator {
 
   public Authenticator() {
     try {
-      string s = "Host=localhost;Username=nielsj;Password=pizza;Database=passwords";
+      string s = "Host=localhost;Username=postgres;Password=postgres;Database=passwords";
       con = new NpgsqlConnection(s);
       con.Open();
     } catch (Exception e) {
@@ -86,7 +86,7 @@ public class Authenticator {
   // (but not required at all)
 
   public virtual bool passwordIsOK(string password, string username) {
-    if (password.Length >= 1) return true;
+    if (password.Length > 8) return true;
     else  return false;
   }
 
