@@ -21,7 +21,7 @@ do {
   Console.Write("Please select character + enter\n"
       + "'d' (dynamic query)\n"
       + "'c' (composed query)\n"
-      + "'sc' (composed query)\n"
+      + "'sc' (safe composed query)\n"
       + "'x' (exit)\n"
       + ">");
   s = Console.ReadLine();
