@@ -1,36 +1,32 @@
-﻿// Program.cs
-// Entry point of the application SQL Injection Frontend
-
-// Program.cs defines a simple 'looping' interface
-// that asks the end user for input.
-// In response to user input,
-// the program calls an instance of class QueryConstructor
-
-// Welcome message
+﻿
 Console.WriteLine("Welcome to SQL Injection Frontend\n");
-
 QueryConstructor qConstructor = new QueryConstructor();
-// QueryConstructor qConstructor = new QueryConstructorSolution();
-// class QueryConstructorSolution contains assignment solutions
-// and is not provided on moodle
-
-// the user interface
-string? s = "x";
+string? s;
 
 do {
   Console.Write("Please select character + enter\n"
           + "'d' (dynamic query)\n"
           + "'c' (composed query)\n"
           + "'x' (exit)\n"
+          + "'sc' (safe composed query)\n"
           + ">");
   s = Console.ReadLine();
   Console.WriteLine();
   switch (s) {
      case "d":
-       qConstructor.dynamicQuery();
+       Console.Write("Please type any SQL query: ");
+       string? sql = Console.ReadLine();
+       qConstructor.dynamicQuery(sql);
        break;
      case "c":
-       qConstructor.composedQuery();
+       Console.Write("Please type id of a course: ");
+       string? cid = Console.ReadLine();
+       qConstructor.composedQuery(cid);
+       break;
+     case "sc":
+       Console.Write("Please type id of a course: ");
+       string? csid = Console.ReadLine();
+       qConstructor.safeComposedQuery(csid);
        break;
      case "x": 
        Console.WriteLine("exiting ..");

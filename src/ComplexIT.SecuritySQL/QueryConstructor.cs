@@ -1,56 +1,37 @@
-﻿// QueryConstructor.cs
-
-public class QueryConstructor {
+﻿public class QueryConstructor {
+  
+  private readonly PostgreSQL_Client _client;
 
   public QueryConstructor() {
-    client = new PostgreSQL_Client("university", "nielsj", "pizza");
-    // retain university database
-    // but change username and password
+    _client = new PostgreSQL_Client("university", "postgres", "postgres", 5433);
   }
- 
-  public PostgreSQL_Client client;
-
-  // method definitions
-
-  // dynamicQuery()
-  // Get user-defined query, send query to db
-
-  public void dynamicQuery() {
-    // defining the query 
-    Console.Write("Please type any SQL query: ");
-    string? sql = Console.ReadLine();
   
-    // printing query string to console
+  public void dynamicQuery(string? sql) {
+    PrintQuery(sql);
+    _client.query(sql);
+  }
+
+  public virtual void composedQuery(string? id) {
+    string staticSqlBefore = "select * from course where course_id = '";
+    string staticSqlAfter = "' and dept_name != 'Biology'";
+    string sql = staticSqlBefore + id + staticSqlAfter;
+    
+    PrintQuery(sql);
+    _client.query(sql);
+  }
+
+  public virtual void safeComposedQuery(string? id)
+  {
+    string sql = "select * from safe_course(@id)";
+    PrintQuery(sql);
+    _client.query(sql,"@id",id);
+  }
+  
+  private void PrintQuery(string sql)
+  {
     Console.Write("Query to be executed: ");
     Console.ForegroundColor = ConsoleColor.Red;
     Console.WriteLine(sql+ "\n");
-    Console.ForegroundColor = ConsoleColor.Black;
-
-    // executing query
-    client.query(sql);
-  } // end method dynamicQuery() 
-
-  // composedQuery()
-  // Get dynamic part from user,
-  // then compose dynamic and static part,
-  // and send query to db
-
-  virtual public void composedQuery() {
-    // defining the query
-    string staticSQLbefore = "select * from course where course_id = '";
-    Console.Write("Please type id of a course: ");
-    string? user_defined = Console.ReadLine();
-    string staticSQLafter = "' and dept_name != 'Biology'";
-    string sql = staticSQLbefore + user_defined + staticSQLafter;
-
-    // printing query string to console
-    Console.Write("Query to be executed: " + staticSQLbefore);
-    Console.ForegroundColor = ConsoleColor.Red;
-    Console.Write(user_defined);
-    Console.ForegroundColor = ConsoleColor.Black;
-    Console.WriteLine(staticSQLafter+ "\n");
-
-    // executing query
-    client.query(sql);
+    Console.ForegroundColor = ConsoleColor.White;
   }
 }

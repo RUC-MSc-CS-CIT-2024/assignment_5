@@ -20,10 +20,11 @@ using Npgsql;
 using System.Collections.Generic;
 
 public class PostgreSQL_Client {
-  public PostgreSQL_Client (string db, string uname, string pword) {
+  public PostgreSQL_Client (string db, string uname, string pword, int port) {
     string s = "Host=localhost;Username=" + uname
                + ";Password=" + pword
-               + ";Database=" + db;
+               + ";Database=" + db
+               + ";Port=" + port;
     con = new NpgsqlConnection(s);
     con.Open();
   }
