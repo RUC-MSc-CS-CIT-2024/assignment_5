@@ -91,7 +91,11 @@ public class Authenticator {
   }
 
   // sqlSetUserRecord is used in register()
-
+  
+  // Question 6: Yes, the method sqlInsertUserRecord() is vulnerable to SQL injection attacks.
+  // because the method concatenates strings to form the SQL query.
+  // An attacker could insert a string that would change the meaning of the query.
+  // Consider, parameteized queries instead.
   virtual public string sqlInsertUserRecord(string username, string salt, string hashedpassword) {
     return "insert into password values ("
                      + "'" + username + "',"
