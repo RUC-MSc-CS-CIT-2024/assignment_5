@@ -57,7 +57,7 @@ In this approach, `$1` acts as a placeholder for `user_defined`, which is passed
 ---
 > NOTE : Questions 4 - 6 are about passwords.
 ---
-### Question 5. 
+### Question 4. 
 > *Implement a check that the password provided by a new user at registration contains more than eight characters. Also check that the password does not contain the username. Obviously, the password ‘admindnc’ for username ‘admin’ will fail this test. Checks should be done in the definition of method passwordIsOK() in Authenticator.cs. (Perhaps you wonder why passwordIsOK() is defined as a virtual procedure. This allows for implementing modifications to the method in a subclass of class Authenticator. This helps me maintain program variants with and without modifications. You are free to hardcode you modifications directly into class Autenticator).*  
 
 The changes done to passwordIsOkay function includes the checking of password length on regristration and that the password does not contain the username.  
