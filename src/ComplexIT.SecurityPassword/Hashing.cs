@@ -1,7 +1,6 @@
 ﻿// Hashing.cs
 
 using System.Security.Cryptography;
-using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using System.Text;
 
 public class Hashing {
@@ -37,7 +36,7 @@ public class Hashing {
 
   private string hashSHA256(string password, string saltstring) {
     byte[] hashinput = Encoding.UTF8.GetBytes(saltstring + password); 
-    byte[] hashoutput = iteratedSha256(hashinput, 1);
+    byte[] hashoutput = iteratedSha256(hashinput, 2_000_000); // one million seems to have no effect on performance. At 100 million, the program becomes slow.
     return Convert.ToHexString(hashoutput);
   }
 
