@@ -11,19 +11,19 @@
 This function, `safe_course`, aims to return specific course information while excluding those from the Biology department. By using parameterized input (`course_id_in` of type `VARCHAR(8)`), it avoids potential SQL injection risks. The structure is as follows:  
 
 ```sql
-CREATE OR REPLACE FUNCTION "public"."safe_course"("course_id_in" varchar)
-  RETURNS TABLE("course_id" varchar, "title" varchar, "dept_name" varchar) AS $BODY$
-  BEGIN
-    RETURN QUERY 
-    SELECT c.course_id, c.title, c.dept_name 
-    FROM course AS c 
-    WHERE c.course_id = course_id_in 
-    AND c.dept_name != 'Biology';
-  END;
- $BODY$
-  LANGUAGE plpgsql VOLATILE
-  COST 100
-  ROWS 1000
+CREATE OR REPLACE FUNCTION safe_course(p_id VARCHAR(8))
+RETURNS TABLE(
+    course_id VARCHAR,
+    title VARCHAR,
+    dept_name VARCHAR,
+    credits numeric(2, 0)
+) 
+AS $$
+    SELECT * 
+    FROM course 
+    WHERE course_id = p_id 
+        AND dept_name != 'Biology';
+$$ LANGUAGE sql;
 ```
 
 > NOTE: safe_course(course_id) function in postgres DB university  
