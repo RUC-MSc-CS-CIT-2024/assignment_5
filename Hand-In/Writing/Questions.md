@@ -52,7 +52,9 @@ In this approach, `$1` acts as a placeholder for `user_defined`, which is passed
 ### Question 3. 
 > *Define an SQL injection attack that works when option ‘c’ is selected, but fails when option ‘sc’ is selected. Provide a screenshot of the succesfull attack and a screenshot of the failed attack.*
 
-(Image and Text to be inserted here...)
+The `composedQuery` method is vulnerable to SQL injection due to string concatenation, allowing injection attempts like `course_id = '101' OR '1'='1'` to retrieve unintended data. However, this attack fails with `safeComposedQuery` because of parameterized querying, which treats the entire input as a single value, effectively neutralizing injection attempts.  
+
+(Images / Screendumps to show proof goes here ...)
 
 ---
 > NOTE : Questions 4 - 6 are about passwords.
@@ -146,4 +148,4 @@ If one really wished to run more iterations over the password before storing it,
 ### Question 6. 
 > *In Authenticator.cs, the method sqlSetUserRecord() defines a string that is an SQL command. The SQL command is then used in method register(). Is the method vulnerable to SQL injection?*  
 
-Yes  
+Yes, In `Authenticator.cs`, the `sqlInsertUserRecord` method, it constructs SQL commands with string concatenation, essentially exposing it to SQL injection, if the inputs aren’t properly sanitized. Using parameterized statements with `NpgsqlParameter` would prevent this vulnerability.
