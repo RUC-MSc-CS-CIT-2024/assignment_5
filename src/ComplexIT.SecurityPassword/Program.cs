@@ -6,7 +6,7 @@ Console.WriteLine("");
 Authenticator auth = new Authenticator();
 
 Console.WriteLine("Registering user admin");
-auth.register("admin", "admindnc");
+auth.register("a", "abc");
 
 
 // the end-user interface

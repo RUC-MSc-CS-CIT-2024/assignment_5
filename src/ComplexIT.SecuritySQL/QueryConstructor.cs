@@ -1,9 +1,10 @@
 ﻿// QueryConstructor.cs
 
+
 public class QueryConstructor {
 
   public QueryConstructor() {
-    client = new PostgreSQL_Client("university", "nielsj", "pizza");
+    client = new PostgreSQL_Client("university", "postgres", "postgres");
     // retain university database
     // but change username and password
   }
@@ -53,4 +54,13 @@ public class QueryConstructor {
     // executing query
     client.query(sql);
   }
+
+  internal void safeComposedQuery()
+  {
+      string sql = "SELECT * FROM safe_course($1);";
+      Console.Write("Please type id of a course: ");
+      string? user_defined = Console.ReadLine();
+      client.query(sql, user_defined, null);
+  }
+
 }
