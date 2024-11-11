@@ -167,7 +167,7 @@ Registration succeeded
 ### Question 5. 
 > *Implement iterative hashing. Hint: In the C# source file Hashing.cs, in the definition of method hashSHA256(), you may modify the second parameter in the call to function iteratedSha256(). What number of iterations appears to be reasonable on your computer?*  
 
-The answer to the following question is going to dpeend a lot on the hardware in the PC used to run. For my school laptop the limit were the following:  
+The answer to the following question is going to dpeend a lot on the hardware on the PC, In the group we experienced quite different results, which is to be expected:  
 
 ```Csharp
 private string hashSHA256(string password, string saltstring) 
@@ -180,7 +180,7 @@ private string hashSHA256(string password, string saltstring)
 
 >NOTE: src\ComplexIT.SecurityPassword\Hashing.cs  
 
-Anything a bit above the 2 million mark starts to slow the process noticeably. I tried running it with 100 million iterations where it took around 4-5 seconds to compute the hash, which is not acceptable for most use cases. \
+Anything a bit above the 2 million mark starts to slow the process noticeably. We tried running it with 100 million iterations where it took around 4-5 seconds to compute the hash, which is not acceptable for most use cases. \
 If one really wished to run more iterations over the password before storing it, they would need stronger hardware.  
 
 ---
@@ -189,4 +189,15 @@ If one really wished to run more iterations over the password before storing it,
 ### Question 6. 
 > *In Authenticator.cs, the method sqlSetUserRecord() defines a string that is an SQL command. The SQL command is then used in method register(). Is the method vulnerable to SQL injection?*  
 
-Yes, In `Authenticator.cs`, the `sqlInsertUserRecord` method, it constructs SQL commands with string concatenation, essentially exposing it to SQL injection, if the inputs aren’t properly sanitized. Using parameterized statements with `NpgsqlParameter` would prevent this vulnerability.
+Yes, In `Authenticator.cs`, the `sqlInsertUserRecord` method, it constructs SQL commands with string concatenation, essentially exposing it to SQL injection, if the inputs aren’t properly sanitized. Using parameterized statements with `NpgsqlParameter` would prevent this vulnerability.\  
+When logging in the attacker can specify their username as follows, which would update the admin password with the attackers password:
+
+```
+' AND true; UPDATE password SET hashed_password = (SELECT hashed_password FROM password WHERE username = 'attacker'), salt = (SELECT salt FROM password WHERE username = 'attacker') WHERE username = 'admin'; --
+```
+
+This can also be done when registering a new user. This require the user to first register a user (the 'attacker') with a known password, this password hash can then be used next time to override the admin password with the attacker password.
+
+```
+dummy', 'salt', 'hash'); UPDATE password SET hashed_password = (SELECT hashed_password FROM password WHERE username = 'attacker'), salt = (SELECT salt FROM password WHERE username = 'attacker') WHERE username = 'admin'; --
+```
