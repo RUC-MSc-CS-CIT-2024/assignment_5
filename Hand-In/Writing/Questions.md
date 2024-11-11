@@ -42,25 +42,60 @@ This function takes a `course_id` as input and returns a row from the course tab
 The `safeComposedQuery` function in `QueryConstructor.cs` (defined in `Program.cs`'s `sc` option) performs a secure query by calling the `safe_course` function. Unlike `composedQuery()`, which concatenates strings directly (a vulnerable practice), `safeComposedQuery` leverages PostgreSQL's parameterized query feature in the `query/3` method to prevent injection.  
 
 ```Csharp
-internal void safeComposedQuery()
+public void safeComposedQuery()
 {
-    string sql = "SELECT * FROM safe_course($1);";
+    string query = "SELECT * FROM safe_course(@p_id)";
     Console.Write("Please type id of a course: ");
-    string? user_defined = Console.ReadLine();
-    client.query(sql, user_defined, null);
+    string? userValue = Console.ReadLine();
+    Console.WriteLine($"Query to be executed: {query}");
+    client.query(query, "p_id", userValue);
 }
 ``` 
 
 > NOTE: src\ComplexIT.SecuritySQL\QueryConstructor.cs
 
-In this approach, `$1` acts as a placeholder for `user_defined`, which is passed securely. This separation of SQL and parameters ensures that any malicious inputs won’t alter the intended SQL logic.  
+In this approach we use `@` sign, followed by the named parameter, to set the value. This separation of SQL and parameters ensures that any malicious inputs won’t alter the intended SQL logic.  
 
 ### Question 3. 
 > *Define an SQL injection attack that works when option ‘c’ is selected, but fails when option ‘sc’ is selected. Provide a screenshot of the succesfull attack and a screenshot of the failed attack.*
 
-The `composedQuery` method is vulnerable to SQL injection due to string concatenation, allowing injection attempts like `course_id = '101' OR '1'='1'` to retrieve unintended data. However, this attack fails with `safeComposedQuery` because of parameterized querying, which treats the entire input as a single value, effectively neutralizing injection attempts.  
+The `composedQuery` method is vulnerable to SQL injection due to string concatenation, allowing injection attempts like `' AND 1=0 OR dept_name = 'Biology' --` to retrieve unintended data. However, this attack fails with `safeComposedQuery` because of parameterized querying, which treats the entire input as a single value, effectively neutralizing injection attempts.  
 
-(Images / Screendumps to show proof goes here ...)
+Test input: `' AND 1=0 OR dept_name = 'Biology' --`
+
+#### S
+```
+Please select character + enter\n"
+'d' (dynamic query)
+'c' (composed query)
+'sc' (secure composed query)
+'x' (exit)
+>c
+Please type id of a course: ' AND 1=0 OR dept_name = 'Biology' --
+Query to be executed: select * from course where course_id LIKE '%' AND 1=0 OR dept_name = 'Biology' --%' and dept_name != 'Biology'
+ course_id | title                 | dept_name | credits
+-----------+-----------------------+-----------+---------
+ BIO-101   | Intro. to Biology     | Biology   | 4
+ BIO-301   | Genetics              | Biology   | 4
+ BIO-399   | Computational Biology | Biology   | 3
+(3 rows)
+```
+
+#### SC
+```
+Please select character + enter"
+'d' (dynamic query)
+'c' (composed query)
+'sc' (secure composed query)
+'x' (exit)
+>sc
+Please type id of a course: ' AND 1=0 OR dept_name = 'Biology' --
+Query to be executed: SELECT * FROM safe_course(@p_id)
+Query/3: SELECT * FROM safe_course(@p_id) with p_id = ' AND 1=0 OR dept_name = 'Biology' --
+ course_id | title | dept_name | credits
+-----------+-------+-----------+---------
+(0 rows)
+```
 
 ---
 > NOTE : Questions 4 - 6 are about passwords.
