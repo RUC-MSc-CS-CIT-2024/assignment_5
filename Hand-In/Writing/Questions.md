@@ -5,7 +5,7 @@
 ### Question 1. 
 *Define a stored database function that returns a table of courses from the course table in the university database. You may name the stored function safe_course(). The function should have one input parameter of type VARCHAR(8). The function should return courses whose course id match the input. (There will be at most one such course, since the course id is a primary key of the table). Naturally, the function should leave out any course offered by the Biology department. Show the SQL code that defines the function.*
 
-```postgres
+```sql
 CREATE OR REPLACE FUNCTION "public"."safe_course"("course_id_in" varchar)
   RETURNS TABLE("course_id" varchar, "title" varchar, "dept_name" varchar) AS $BODY$
   BEGIN
@@ -77,21 +77,21 @@ if (passwordIsOK(password, username) == false)
 
 Let us say a user would like to use the following credentials:
 
-```json
+```
 username: John
 password: JohnDoe123
 ```
 
 This would fail beacuse the username is in the provided password, but if the user were to split it up a bit, like:
 
-```JSON
+```
 username: John
 password: J1ohnDoe23
 ```
 
 Then the check would not see any issue with the provided password and it would return true, and allow the regristration.
 
-```JSON
+```
 Registration ..
 
 Please type username: 
