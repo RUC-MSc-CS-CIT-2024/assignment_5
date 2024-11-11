@@ -84,14 +84,14 @@ password: JohnDoe123
 
 This would fail beacuse the username is in the provided password, but if the user were to split it up a bit, like:
 
-```text
+```xml
 username: John
 password: J1ohnDoe23
 ```
 
 Then the check would not see any issue with the provided password and it would return true, and allow the regristration.
 
-```text
+```xml
 Registration ..
 
 Please type username: 
