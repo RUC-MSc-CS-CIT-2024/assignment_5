@@ -77,21 +77,21 @@ if (passwordIsOK(password, username) == false)
 
 Let us say a user would like to use the following credentials:
 
-```
+```json
 username: John
 password: JohnDoe123
 ```
 
 This would fail beacuse the username is in the provided password, but if the user were to split it up a bit, like:
 
-```
+```json
 username: John
 password: J1ohnDoe23
 ```
 
 Then the check would not see any issue with the provided password and it would return true, and allow the regristration.
 
-```
+```json
 Registration ..
 
 Please type username: 
