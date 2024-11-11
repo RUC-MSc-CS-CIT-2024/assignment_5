@@ -139,6 +139,7 @@ private string hashSHA256(string password, string saltstring)
 
 Anything a bit above the 2 million mark starts to slow the process noticeably. I tried running it with 100 million iterations where it took around 4-5 seconds to compute the hash, which is not acceptable for most use cases. \
 If one really wished to run more iterations over the password before storing it, they would need stronger hardware.  
+
 ---
 > NOTE : Question 6 is about passwords and SQL injection.  
 ---
