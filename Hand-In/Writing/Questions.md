@@ -1,6 +1,12 @@
 # Assignment 5 - Security
 ---
 ## Complex IT Systems - Fall 2024
+
+Group **cit11**: 
+- Ida Hay Jørgensen (stud-ijoergense@ruc.dk)
+- Julius Krüger Madsen (stud-juliusm@ruc.dk)
+- Marek Laslo (stud-laslo@ruc.dk)
+- Sofus Hilfling Nielsen (stud-sofusn@ruc.dk)
 ---
 > NOTE : Questions 1-3 are about SQL Injection.
 ---  
