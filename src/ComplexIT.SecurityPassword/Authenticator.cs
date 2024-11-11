@@ -6,7 +6,7 @@ public class Authenticator {
 
   public Authenticator() {
     try {
-      string s = "Host=localhost;Username=nielsj;Password=pizza;Database=passwords";
+      string s = "Host=localhost;Username=postgres;Password=postgres;Database=uni";
       con = new NpgsqlConnection(s);
       con.Open();
     } catch (Exception e) {
