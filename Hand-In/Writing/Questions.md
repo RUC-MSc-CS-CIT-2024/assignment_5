@@ -4,12 +4,10 @@
 ---
 > NOTE : Questions 1-3 are about SQL Injection.
 ---
-<br />
+
 ### Question 1. 
-*Define a stored database function that returns a table of courses from the course table in the university database. You may name the stored function safe_course(). The function should have one input parameter of type VARCHAR(8). The function should return courses whose course id match the input. (There will be at most one such course, since the course id is a primary key of the table). Naturally, the function should leave out any course offered by the Biology department. Show the SQL code that defines the function.*
-<br />
-This function, `safe_course`, aims to return specific course information while excluding those from the Biology department. By using parameterized input (`course_id_in` of type `VARCHAR(8)`), it avoids potential SQL injection risks. The structure is as follows:
-<br />
+*Define a stored database function that returns a table of courses from the course table in the university database. You may name the stored function safe_course(). The function should have one input parameter of type VARCHAR(8). The function should return courses whose course id match the input. (There will be at most one such course, since the course id is a primary key of the table). Naturally, the function should leave out any course offered by the Biology department. Show the SQL code that defines the function.*\ 
+This function, `safe_course`, aims to return specific course information while excluding those from the Biology department. By using parameterized input (`course_id_in` of type `VARCHAR(8)`), it avoids potential SQL injection risks. The structure is as follows:\ 
 ```sql
 CREATE OR REPLACE FUNCTION "public"."safe_course"("course_id_in" varchar)
   RETURNS TABLE("course_id" varchar, "title" varchar, "dept_name" varchar) AS $BODY$
@@ -27,9 +25,8 @@ CREATE OR REPLACE FUNCTION "public"."safe_course"("course_id_in" varchar)
 ```
 
 > NOTE: safe_course(course_id) function in postgres DB university
-<br />
-This function takes a `course_id` as input and returns a row from the course table if it exists, filtering out Biology courses by specifying `AND c.dept_name != 'Biology'`. This approach not only mitigates SQL injection by handling inputs safely but also ensures only courses from other departments are returned.
-<br />
+\ 
+This function takes a `course_id` as input and returns a row from the course table if it exists, filtering out Biology courses by specifying `AND c.dept_name != 'Biology'`. This approach not only mitigates SQL injection by handling inputs safely but also ensures only courses from other departments are returned.\ 
 ### Question 2. 
 *In SQL-Injection-Frontend, in the switch statement of Program.cs, define an option ‘sc’ that calls a method safeComposedQuery(). Also, in QueryConstructor.cs, define method safeComposedQuery(). The new function should be an improvement over composedQuery() in two ways: firstly, it must call the stored database function safe_course(); and secondly, it must use separate parameter passing, including by calling query/3 as defined in PostgreSQL_client.cs.*
 \
