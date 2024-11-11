@@ -8,7 +8,7 @@
 ### Question 1. 
 > *Define a stored database function that returns a table of courses from the course table in the university database. You may name the stored function safe_course(). The function should have one input parameter of type VARCHAR(8). The function should return courses whose course id match the input. (There will be at most one such course, since the course id is a primary key of the table). Naturally, the function should leave out any course offered by the Biology department. Show the SQL code that defines the function.*  
 
-This function, `safe_course`, aims to return specific course information while excluding those from the Biology department. By using parameterized input (`course_id_in` of type `VARCHAR(8)`), it avoids potential SQL injection risks. The structure is as follows:  
+This function, `safe_course`, aims to return specific course information while excluding those from the Biology department. By using parameterized input (`p_id` of type `VARCHAR(8)`), it avoids potential SQL injection risks. The structure is as follows:  
 
 ```sql
 CREATE OR REPLACE FUNCTION safe_course(p_id VARCHAR(8))
@@ -26,7 +26,7 @@ AS $$
 $$ LANGUAGE sql;
 ```
 
-> NOTE: safe_course(course_id) function in postgres DB university  
+> NOTE: safe_course(p_id) function in postgres DB university  
 
 This function takes a `course_id` as input and returns a row from the course table if it exists, filtering out Biology courses by specifying `AND c.dept_name != 'Biology'`. This approach not only mitigates SQL injection by handling inputs safely but also ensures only courses from other departments are returned.  
 
