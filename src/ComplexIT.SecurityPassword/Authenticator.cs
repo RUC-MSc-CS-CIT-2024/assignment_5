@@ -86,8 +86,13 @@ public class Authenticator {
   // (but not required at all)
 
   public virtual bool passwordIsOK(string password, string username) {
-    if (password.Length > 8) return true;
-    else  return false;
+    if (password.Length <= 8) {
+      return false;
+    }
+    if (password.Contains(username)) {
+      return false;
+    }
+    return true;
   }
 
   // sqlSetUserRecord is used in register()
